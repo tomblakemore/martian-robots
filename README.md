@@ -25,7 +25,7 @@ pip install -r requirements.txt
 Run the program:
 
 ```bash
-python src/main.py
+python -m src.main
 ```
 
 ## 🧪 Running Tests
