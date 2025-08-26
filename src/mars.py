@@ -30,6 +30,9 @@ class Mars:
                     change_direction[instruction]()
                     continue
                 next_x, next_y = self.next_coordinates(robot.x, robot.y, robot.direction)
+                if not self.is_within_the_boundaries(next_x, next_y):
+                    robot.mark_as_lost()
+                    break
                 robot.move_to_coordinates(next_x, next_y)
 
     def next_north_coordinates(self, current_x: int, current_y: int) -> tuple[int, int]:

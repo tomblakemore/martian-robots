@@ -29,7 +29,7 @@ class Robot:
 
     def mark_as_lost(self):
         """Mark the robot as lost."""
-        pass
+        self.lost = True
 
     def position(self) -> str:
         """Return the robot's current position as a string."""
