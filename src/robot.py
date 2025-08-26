@@ -10,19 +10,26 @@ class Robot:
 
     def turn_left(self):
         """Turn the robot to the left."""
-        pass # TODO: Implement this method
+        directions = ["N", "W", "S", "E"]
+        current_index = directions.index(self.direction)
+        new_index = (current_index - 1) % 4
+        self.direction = directions[new_index]
 
     def turn_right(self):
         """Turn the robot to the right."""
-        pass # TODO: Implement this method
+        directions = ["N", "E", "S", "W"]
+        current_index = directions.index(self.direction)
+        new_index = (current_index + 1) % 4
+        self.direction = directions[new_index]
 
-    def move_forward(self):
-        """Move the robot forward by one in the direction it is facing."""
-        pass # TODO: Implement this method
+    def move_to_coordinates(self, x: int, y: int):
+        """Move the robot to a new position."""
+        self.x = x
+        self.y = y
 
     def mark_as_lost(self):
         """Mark the robot as lost."""
-        pass # TODO: Implement this method
+        pass
 
     def position(self) -> str:
         """Return the robot's current position as a string."""

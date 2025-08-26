@@ -16,11 +16,51 @@ class Mars:
 
     def is_within_the_boundaries(self, x: int, y: int) -> bool:
         """Determine if a point x, y is within the boundaries."""
-        return True  # TODO: Implement this method
+        return 0 <= x <= self.x_max and 0 <= y <= self.y_max
 
     def move_robots(self):
         """Move all robots, in the order they were added, according to their instructions."""
-        pass  # TODO: Implement this method
+        for robot in self.robots:
+            for instruction in robot.instructions:
+                change_direction = {
+                    "L": robot.turn_left,
+                    "R": robot.turn_right
+                }
+                if instruction in change_direction:
+                    change_direction[instruction]()
+                    continue
+                next_x, next_y = self.next_coordinates(robot.x, robot.y, robot.direction)
+                robot.move_to_coordinates(next_x, next_y)
+
+    def next_north_coordinates(self, current_x: int, current_y: int) -> tuple[int, int]:
+        """Get the next coordinates for a single forward move to the north."""
+        return current_x, current_y + 1
+
+    def next_coordinates(self, current_x: int, current_y: int, direction: str) -> tuple[int, int]:
+        """Get the next coordinates for a single forward move."""
+        moves = {
+            "N": self.next_north_coordinates,
+            "E": self.next_east_coordinates,
+            "S": self.next_south_coordinates,
+            "W": self.next_west_coordinates
+        }
+        return moves[direction](current_x, current_y)
+
+    def next_north_coordinates(self, current_x: int, current_y: int) -> tuple[int, int]:
+        """Get the next coordinates for a single forward move to the north."""
+        return current_x, current_y + 1
+
+    def next_east_coordinates(self, current_x: int, current_y: int) -> tuple[int, int]:
+        """Get the next coordinates for a single forward move to the east."""
+        return current_x + 1, current_y
+
+    def next_south_coordinates(self, current_x: int, current_y: int) -> tuple[int, int]:
+        """Get the next coordinates for a single forward move to the south."""
+        return current_x, current_y - 1
+
+    def next_west_coordinates(self, current_x: int, current_y: int) -> tuple[int, int]:
+        """Get the next coordinates for a single forward move to the west."""
+        return current_x - 1, current_y
 
     def robot_positions(self) -> list[str]:
         """Return the positions of all robots."""
