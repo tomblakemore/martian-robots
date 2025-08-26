@@ -10,13 +10,13 @@ class Mars:
 
     def add_robot(self, robot: Robot):
         """Add a robot to Mars. Raises an OutOfBoundsError if the robot is placed outside the boundaries."""
-        if not self.is_within_the_boundaries(robot.x, robot.y):
+        if self.is_out_of_bounds(robot.x, robot.y):
             raise OutOfBoundsError("Robot has been placed outside the boundaries")
         self.robots.append(robot)
 
-    def is_within_the_boundaries(self, x: int, y: int) -> bool:
-        """Determine if a point x, y is within the boundaries."""
-        return 0 <= x <= self.x_max and 0 <= y <= self.y_max
+    def is_out_of_bounds(self, x: int, y: int) -> bool:
+        """Determine if a point x, y is outside the boundaries."""
+        return not (0 <= x <= self.x_max and 0 <= y <= self.y_max)
 
     def move_robots(self):
         """Move all robots, in the order they were added, according to their instructions."""
@@ -29,8 +29,12 @@ class Mars:
                 if instruction in change_direction:
                     change_direction[instruction]()
                     continue
-                next_x, next_y = self.next_coordinates(robot.x, robot.y, robot.direction)
-                if not self.is_within_the_boundaries(next_x, next_y):
+                current_position = (robot.x, robot.y, robot.direction)
+                if current_position in self.scents:
+                    continue  # If the robot is about to make a move to a a known scent, skip the move
+                next_x, next_y = self.next_coordinates(current_position)
+                if self.is_out_of_bounds(next_x, next_y):
+                    self.scents.add(current_position)  # If the next move is out of bounds, add the current position to the scents
                     robot.mark_as_lost()
                     break
                 robot.move_to_coordinates(next_x, next_y)
@@ -39,7 +43,7 @@ class Mars:
         """Get the next coordinates for a single forward move to the north."""
         return current_x, current_y + 1
 
-    def next_coordinates(self, current_x: int, current_y: int, direction: str) -> tuple[int, int]:
+    def next_coordinates(self, current_position: tuple[int, int, str]) -> tuple[int, int]:
         """Get the next coordinates for a single forward move."""
         moves = {
             "N": self.next_north_coordinates,
@@ -47,6 +51,7 @@ class Mars:
             "S": self.next_south_coordinates,
             "W": self.next_west_coordinates
         }
+        current_x, current_y, direction = current_position
         return moves[direction](current_x, current_y)
 
     def next_north_coordinates(self, current_x: int, current_y: int) -> tuple[int, int]:
@@ -69,5 +74,6 @@ class Mars:
         """Return the positions of all robots."""
         return [robot.position() for robot in self.robots]
 
+# Exception for out of bounds errors
 class OutOfBoundsError(Exception):
     pass

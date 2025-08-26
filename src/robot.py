@@ -8,19 +8,20 @@ class Robot:
     instructions: str = ""
     lost: bool = False
 
+    def turn(self, direction: str):
+        """Turn the robot left or right."""
+        directions = ["N", "E", "S", "W"]
+        current_index = directions.index(self.direction)
+        new_index = (current_index - 1) % 4 if direction == "L" else (current_index + 1) % 4
+        self.direction = directions[new_index]
+
     def turn_left(self):
         """Turn the robot to the left."""
-        directions = ["N", "W", "S", "E"]
-        current_index = directions.index(self.direction)
-        new_index = (current_index - 1) % 4
-        self.direction = directions[new_index]
+        self.turn("L")
 
     def turn_right(self):
         """Turn the robot to the right."""
-        directions = ["N", "E", "S", "W"]
-        current_index = directions.index(self.direction)
-        new_index = (current_index + 1) % 4
-        self.direction = directions[new_index]
+        self.turn("R")
 
     def move_to_coordinates(self, x: int, y: int):
         """Move the robot to a new position."""
