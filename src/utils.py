@@ -16,7 +16,7 @@ def extract_position(position: str) -> tuple[int, int, str]:
         raise ValueError("Invalid direction")
     return int(x), int(y), direction
 
-def validate_instructions(instructions: str):
+def validate_instructions(instructions: str) -> None:
     """Validate the format and length of the instructions. Raises a ValueError exception on fail."""
     if not all(char in ["L", "R", "F"] for char in instructions):
         raise ValueError("Invalid instructions characters")

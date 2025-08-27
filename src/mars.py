@@ -8,7 +8,7 @@ class Mars:
     robots: list[Robot] = field(default_factory=list)
     scents: set[tuple[int, int, str]] = field(default_factory=set)
 
-    def add_robot(self, robot: Robot):
+    def add_robot(self, robot: Robot) -> None:
         """Add a robot to Mars. Raises an OutOfBoundsError if the robot is placed outside the boundaries."""
         if self.is_out_of_bounds(robot.x, robot.y):
             raise OutOfBoundsError("Robot has been placed outside the boundaries")
@@ -18,7 +18,7 @@ class Mars:
         """Determine if a point x, y is outside the boundaries."""
         return not (0 <= x <= self.x_max and 0 <= y <= self.y_max)
 
-    def move_robots(self):
+    def move_robots(self) -> None:
         """Move all robots, in the order they were added, according to their instructions."""
         for robot in self.robots:
             for instruction in robot.instructions:

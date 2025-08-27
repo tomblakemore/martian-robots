@@ -19,7 +19,7 @@ def prompt_for_size() -> tuple[int, int]:
         except ValueError:
             prompt = "Invalid size format. Please try again in \"width height\" format: "
 
-def add_robots_to_mars(mars: Mars) -> list[Robot]:
+def add_robots_to_mars(mars: Mars) -> None:
     """Add one or many robots to Mars by asking for their positions and instructions."""
 
     # Prompt for the first robot's position
