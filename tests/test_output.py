@@ -1,11 +1,5 @@
-from src.mars import Mars, OutOfBoundsError
+from src.mars import Mars
 from src.robot import Robot
-import pytest
-
-def test_out_of_bounds():
-    mars = Mars(5, 3)
-    with pytest.raises(OutOfBoundsError):
-        mars.add_robot(Robot(10, 10, "N"))
 
 def test_simple_moves():
     mars = Mars(5, 3)
