@@ -2,6 +2,8 @@
 
 A [Python](https://www.python.org) implementation of Martian Robots. Martian Robots simulates robots exploring the Martian landscape. Users define the size of Mars, place robots on it, and supply each robot with a sequence of instructions. The program will then calculate the final positions of the robots, running each of the instructions in order.
 
+Python felt an appropriate technical choice due to its performance, readability, testability, and speed of development, allowing for a more focused implementation.
+
 ## Approach
 
 1. **Initial Setup**: Create an empty project with a virtual environment and initial structure.
